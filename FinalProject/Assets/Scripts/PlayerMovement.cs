@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] AnimationStateChanger animationStateChanger;
+    [SerializeField] Transform body;
     private Rigidbody2D rb;
 
     public float moveSpeed = 5.0f;
@@ -40,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
                 float moveX = 0f;
                 float moveY = 0f;
 
+                // Checks for player input and moves towards the corresponding direction.
                 if (Input.GetKey(KeyCode.W))
                 {
                     moveY = 1f;
@@ -58,6 +61,25 @@ public class PlayerMovement : MonoBehaviour
                 }
                 moveDir = new Vector3(moveX, moveY).normalized;
 
+                // Checks for movement, sets animation to run if moving and flips player horizontally if moving left.
+                if(moveX != 0 || moveY != 0)
+                {
+                    if (moveX > 0)
+                    {
+                        body.localScale = new Vector3(2, 2, 2);
+                        animationStateChanger.ChangeAnimationState("Run");
+                    }
+                    else if (moveX < 0)
+                    {
+                        body.localScale = new Vector3(-2, 2, 2);
+                        animationStateChanger.ChangeAnimationState("Run");
+                    }
+                }
+                else
+                {
+                    animationStateChanger.ChangeAnimationState("Idle");
+                }
+
                 if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
                 {
                     dashDir = moveDir;
@@ -65,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
                     state = State.Dash;
                     isDashing = true;
                     dashCoolDownTimer = dashCoolDown;
+                    animationStateChanger.ChangeAnimationState("Dodge");
+                    
                 }
                 break;
             case State.Dash:
@@ -74,11 +98,13 @@ public class PlayerMovement : MonoBehaviour
                 float minDashSpeed = 5f;
                 if (dashSpeed < minDashSpeed)
                 {
+                    animationStateChanger.ChangeAnimationState("Idle");
                     state = State.Normal;
                 }
                 break;
         }
 
+        // Checks if player has dashed and starts a count down for the cool down.
         if (isDashing)
         {
             dashCoolDownTimer -= Time.deltaTime;
