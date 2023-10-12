@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bow : MonoBehaviour
 {
 
-    [SerializeField] AnimationStateChanger animationStateChanger;
+    //[SerializeField] AnimationStateChanger animationStateChanger;
 
     private Camera mainCam;
     public GameObject arrow;
@@ -47,7 +47,7 @@ public class Bow : MonoBehaviour
             canShoot = false;
             timer = timeBetweenShooting;
             Instantiate(arrow, arrowTransform.position, Quaternion.identity);
-            animationStateChanger.ChangeAnimationState("Attack");
+            //animationStateChanger.ChangeAnimationState("Attack");
         }
 
         if (canShoot)
