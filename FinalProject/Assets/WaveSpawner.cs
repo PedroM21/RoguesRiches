@@ -12,26 +12,58 @@ public class Wave
 }
 public class WaveSpawner : MonoBehaviour
 {
+    public enum GameState { SpawningWave, ItemSelection, WaveCompleted }
+
     [SerializeField] Wave[] waves;
     [SerializeField] Transform[] spawnPoints;
+    [SerializeField] Items items;
+    public GameState gameState;
 
     private Wave currentWave;
     private int currentWaveNumber;
     private float nextSpawnTime;
 
     private bool canSpawn = true;
-    
+
+    private void Start()
+    {
+        gameState = GameState.SpawningWave;
+    }
 
     private void Update()
     {
-        currentWave = waves[currentWaveNumber];
-        SpawnWave();
-        GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemies");
-        if(totalEnemies.Length == 0 && !canSpawn)
+        switch (gameState)
         {
-            currentWaveNumber++;
-            canSpawn = true;
+            case GameState.SpawningWave:
+                Debug.Log("Spawning wave state");
+                currentWave = waves[currentWaveNumber];
+                SpawnWave();
+                CheckWaveCompletion();
+                break;
+
+            case GameState.ItemSelection:
+                if (items != null)
+                {
+                    Debug.Log("In Item Selection State");
+                    GameObject selectedItem = items.SelectItem();
+
+                    currentWaveNumber++;
+                    canSpawn = true;
+                    gameState = GameState.SpawningWave;
+                }
+                break;
+            
+            case GameState.WaveCompleted:
+                if (items != null && items.SelectItem())
+                {
+                    Debug.Log("Wave Completed State");
+                    currentWaveNumber++;
+                    canSpawn = true;
+                    gameState = GameState.SpawningWave;
+                }
+                break;
         }
+
     }
 
     void SpawnWave()
@@ -48,6 +80,15 @@ public class WaveSpawner : MonoBehaviour
                 canSpawn = false;
             }
 
+        }
+    }
+
+    void CheckWaveCompletion()
+    {
+        GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemies");
+        if (totalEnemies.Length == 0 && !canSpawn)
+        {
+            gameState = GameState.ItemSelection;
         }
     }
 
