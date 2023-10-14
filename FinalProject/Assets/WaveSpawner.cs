@@ -9,6 +9,7 @@ public class Wave
     public int numOfEnemies;
     public GameObject[] typeOfEnemies;
     public float spawnInterval;
+    public bool isBossWave;
 }
 public class WaveSpawner : MonoBehaviour
 {
@@ -16,7 +17,10 @@ public class WaveSpawner : MonoBehaviour
 
     [SerializeField] Wave[] waves;
     [SerializeField] Transform[] spawnPoints;
+    [SerializeField] Transform[] portalSpawnPoints;
     [SerializeField] Items items;
+    [SerializeField] GameObject loopPortal;
+    [SerializeField] GameObject endPortal;
     public GameState gameState;
 
     private Wave currentWave;
@@ -24,6 +28,7 @@ public class WaveSpawner : MonoBehaviour
     private float nextSpawnTime;
 
     private bool canSpawn = true;
+    private bool spawnedPortals = false;
 
     private void Start()
     {
@@ -35,7 +40,6 @@ public class WaveSpawner : MonoBehaviour
         switch (gameState)
         {
             case GameState.SpawningWave:
-                Debug.Log("Spawning wave state");
                 currentWave = waves[currentWaveNumber];
                 SpawnWave();
                 CheckWaveCompletion();
@@ -47,19 +51,34 @@ public class WaveSpawner : MonoBehaviour
                     Debug.Log("In Item Selection State");
                     GameObject selectedItem = items.SelectItem();
 
-                    currentWaveNumber++;
-                    canSpawn = true;
-                    gameState = GameState.SpawningWave;
+                    //currentWaveNumber++;
+                    //canSpawn = true;
+                    gameState = GameState.WaveCompleted;
                 }
                 break;
             
             case GameState.WaveCompleted:
-                if (items != null && items.SelectItem())
+                if (items != null)
                 {
                     Debug.Log("Wave Completed State");
                     currentWaveNumber++;
-                    canSpawn = true;
-                    gameState = GameState.SpawningWave;
+
+                    if(currentWaveNumber < waves.Length)
+                    {
+                        canSpawn = true;
+                        gameState = GameState.SpawningWave;
+                    }
+                    else
+                    {
+                        if (!spawnedPortals)
+                        {
+                            Debug.Log("Wave's ended, Spawn both loop portal and end run portal!!");
+                            SpawnPortals();
+                            spawnedPortals = true;
+                        }
+                        
+                    }
+                    
                 }
                 break;
         }
@@ -88,8 +107,33 @@ public class WaveSpawner : MonoBehaviour
         GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemies");
         if (totalEnemies.Length == 0 && !canSpawn)
         {
-            gameState = GameState.ItemSelection;
+            if (currentWave.isBossWave)
+            {
+                SpawnWave();
+            }
+            else
+            {
+                gameState = GameState.ItemSelection;
+            }
+            
         }
+    }
+
+    public void SpawnPortals()
+    {
+        if(portalSpawnPoints.Length >= 2)
+        {
+            Transform loopPortalPoint = portalSpawnPoints[0];
+            Transform endPortalPoint = portalSpawnPoints[1];
+
+            Instantiate(loopPortal, loopPortalPoint.position, loopPortalPoint.rotation);
+            Instantiate(endPortal, endPortalPoint.position, endPortalPoint.rotation);
+        }
+        else
+        {
+            Debug.LogError("Please assign at least 2 points!");
+        }
+        
     }
 
 }
