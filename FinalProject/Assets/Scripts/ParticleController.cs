@@ -16,7 +16,7 @@ public class ParticleController : MonoBehaviour
 
     float counter;
 
-    // Update is called once per frame
+    // Plays the dust particle below the player.
     void Update()
     {
         counter += Time.deltaTime;

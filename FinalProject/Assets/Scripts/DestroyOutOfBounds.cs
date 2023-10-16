@@ -9,13 +9,7 @@ public class DestroyOutOfBounds : MonoBehaviour
     private float leftBound = -15f;
     private float rightBound = 15f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    // Destroys the arrows shot by the player once they leave the screen.
     void Update()
     {
         // If the object exits the players view. Remove that object

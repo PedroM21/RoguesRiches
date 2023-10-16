@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class Bow : MonoBehaviour
 {
-
-    //[SerializeField] AnimationStateChanger animationStateChanger;
-
     private Camera mainCam;
     public GameObject arrow;
     public Transform arrowTransform;
 
     public float timeBetweenShooting = 0.82f;
-    private float timer = 0;
     public bool canShoot = true;
-
-    private Vector3 mousePos;
 
     private void Start()
     {
@@ -24,41 +18,22 @@ public class Bow : MonoBehaviour
 
     private void Update()
     {
-        mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        /*
-        Vector3 rotation = mousePos - transform.position;
-
-        float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.Euler(0, 0, rotZ);*/
-
-        if (!canShoot)
+        if(Input.GetMouseButton(0) && canShoot)
         {
-            timer += Time.deltaTime;
-            if(timer > timeBetweenShooting)
-            {
-                canShoot = true;
-                timer = 0;
-            }
+            ShootArrow();
+            Invoke("EnableShooting", timeBetweenShooting);
         }
+    }
 
-        if(Input.GetMouseButtonDown(0) && canShoot)
-        {
-            canShoot = false;
-            timer = timeBetweenShooting;
-            Instantiate(arrow, arrowTransform.position, Quaternion.identity);
-            //animationStateChanger.ChangeAnimationState("Attack");
-        }
+    private void ShootArrow()
+    {
+        canShoot = false;
+        Instantiate(arrow, arrowTransform.position, Quaternion.identity);
+    }
 
-        if (canShoot)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0f)
-            {
-                canShoot = true;
-                
-            }
-        }
+    private void EnableShooting()
+    {
+        canShoot = true;
     }
 
 }

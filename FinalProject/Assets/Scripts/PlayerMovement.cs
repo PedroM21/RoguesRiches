@@ -113,7 +113,6 @@ public class PlayerMovement : MonoBehaviour
                 isDashing = false;
             }
         }
-
     }
 
     private void FixedUpdate()
@@ -127,7 +126,5 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = dashDir * dashSpeed;
                 break;
         }
-
     }
-
 }

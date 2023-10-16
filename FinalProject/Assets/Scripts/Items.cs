@@ -8,7 +8,6 @@ public class Items : MonoBehaviour
     [SerializeField] GameObject[] unCommonItems;
     [SerializeField] GameObject[] rareItems;
     [SerializeField] GameObject[] legendaryItems;
-    [SerializeField] Transform[] spawnPoints;
 
     [SerializeField] float commonSpawnRate = 0.5f;
     [SerializeField] float unCommonSpawnRate = 0.3f;
@@ -28,13 +27,10 @@ public class Items : MonoBehaviour
         itemOptions[3] = legendaryItems[Random.Range(0, legendaryItems.Length)];
 
         GameObject randomItem = itemOptions[Random.Range(0, itemOptions.Length)];
-        Transform randomPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        GameObject spawnedItem = Instantiate(randomItem, randomPoint.position, Quaternion.identity);
+
+        
 
         Debug.Log("Items spawned");
-        return spawnedItem;
-
-
+        return randomItem;
     }
-
 }

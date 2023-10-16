@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Wave
@@ -16,11 +17,14 @@ public class WaveSpawner : MonoBehaviour
     public enum GameState { SpawningWave, ItemSelection, WaveCompleted }
 
     [SerializeField] Wave[] waves;
+    [SerializeField] Items items;
     [SerializeField] Transform[] spawnPoints;
     [SerializeField] Transform[] portalSpawnPoints;
-    [SerializeField] Items items;
+    [SerializeField] Transform itemManager;
     [SerializeField] GameObject loopPortal;
     [SerializeField] GameObject endPortal;
+    [SerializeField] Text waveCounterText;
+    
     public GameState gameState;
 
     private Wave currentWave;
@@ -43,16 +47,22 @@ public class WaveSpawner : MonoBehaviour
                 currentWave = waves[currentWaveNumber];
                 SpawnWave();
                 CheckWaveCompletion();
+
+                if(currentWaveNumber == waves.Length - 1)
+                {
+                    waveCounterText.text = "Boss Wave";
+                }
+                else
+                    waveCounterText.text = "Wave: " + (currentWaveNumber + 1);
+
                 break;
 
             case GameState.ItemSelection:
                 if (items != null)
                 {
                     Debug.Log("In Item Selection State");
-                    GameObject selectedItem = items.SelectItem();
-
-                    //currentWaveNumber++;
-                    //canSpawn = true;
+                    // Need to add ability for wave to wait until player selects an item
+                    // and then moves on to the next wave
                     gameState = GameState.WaveCompleted;
                 }
                 break;
@@ -60,7 +70,6 @@ public class WaveSpawner : MonoBehaviour
             case GameState.WaveCompleted:
                 if (items != null)
                 {
-                    Debug.Log("Wave Completed State");
                     currentWaveNumber++;
 
                     if(currentWaveNumber < waves.Length)
@@ -72,11 +81,9 @@ public class WaveSpawner : MonoBehaviour
                     {
                         if (!spawnedPortals)
                         {
-                            Debug.Log("Wave's ended, Spawn both loop portal and end run portal!!");
                             SpawnPortals();
                             spawnedPortals = true;
                         }
-                        
                     }
                     
                 }
@@ -131,7 +138,7 @@ public class WaveSpawner : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Please assign at least 2 points!");
+            Debug.LogError("Assign 2 points for the portals");
         }
         
     }

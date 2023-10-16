@@ -28,8 +28,11 @@ public class Arrows : MonoBehaviour
         if (collision.collider.gameObject.tag == "Enemies")
         {
             collision.gameObject.GetComponent<WaveEnemies>().TakeDamage(2);
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Destroy(gameObject);
         }
     }
-
-
 }

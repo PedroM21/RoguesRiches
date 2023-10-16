@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 8
   currentHealth: 0
-  damage: 2
+  damage: 3
 --- !u!114 &8272758074293416965
 MonoBehaviour:
   m_ObjectHideFlags: 0

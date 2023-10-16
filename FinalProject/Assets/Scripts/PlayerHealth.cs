@@ -11,13 +11,13 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth;
     public int currHealth;
 
-    // Start is called before the first frame update
+    // Sets players health to the max value
     void Start()
     {
         currHealth = maxHealth;
     }
 
-    // Update is called once per frame
+    // Sets the health bar text to the max amount
     void Update()
     {
         healthBarValue.text = currHealth.ToString() + "/" + maxHealth.ToString();
@@ -26,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
         healthBarSlider.maxValue = maxHealth;
     }
 
+    // Function for taking health off the player's health bar
     public void TakeDamage(int amount)
     {
         currHealth -= amount;

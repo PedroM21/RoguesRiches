@@ -14,12 +14,7 @@ public class WaveEnemies : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    // Function to calculate damage taken
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
@@ -29,13 +24,12 @@ public class WaveEnemies : MonoBehaviour
         }
     }
 
+    // If player collides with enemy, the player will take damage.
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.tag == "Player")
         {
-            Debug.Log("Collison with player deteted!");
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
-
         }
     }
 
