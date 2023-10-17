@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
             healthBarSlider.value = 0;
             healthBarValue.text = "0" + "/" + maxHealth.ToString();
             Destroy(gameObject);
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
