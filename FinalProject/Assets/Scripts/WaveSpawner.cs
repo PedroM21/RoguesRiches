@@ -17,10 +17,10 @@ public class WaveSpawner : MonoBehaviour
     public enum GameState { SpawningWave, ItemSelection, WaveCompleted }
 
     [SerializeField] Wave[] waves;
-    [SerializeField] Items items;
+    [SerializeField] ItemSpawner itemSpawner;
     [SerializeField] Transform[] spawnPoints;
     [SerializeField] Transform[] portalSpawnPoints;
-    [SerializeField] Transform itemManager;
+    [SerializeField] bool selectedItem = false;
     [SerializeField] GameObject loopPortal;
     [SerializeField] GameObject endPortal;
     [SerializeField] Text waveCounterText;
@@ -33,6 +33,7 @@ public class WaveSpawner : MonoBehaviour
 
     private bool canSpawn = true;
     private bool spawnedPortals = false;
+    private bool alreadySpawned = false;
 
     private void Start()
     {
@@ -58,32 +59,49 @@ public class WaveSpawner : MonoBehaviour
                 break;
 
             case GameState.ItemSelection:
-                if (items != null)
+                if (itemSpawner != null)
                 {
-                    Debug.Log("In Item Selection State");
+                    //Debug.Log("In Item Selection State");
                     // Need to add ability for wave to wait until player selects an item
                     // and then moves on to the next wave
-                    gameState = GameState.WaveCompleted;
+                    if (alreadySpawned)
+                    {
+                        gameState = GameState.ItemSelection;
+                    }
+                    else
+                    {
+                        itemSpawner.SpawnItem();
+                        HasSpawned();
+                    }
+
+                    if (selectedItem)
+                    {
+                        gameState = GameState.WaveCompleted;
+                        alreadySpawned = false;
+                        selectedItem = false;
+                    }
+                    else
+                    {
+                        gameState = GameState.ItemSelection;
+                    }
+                    
                 }
                 break;
             
             case GameState.WaveCompleted:
-                if (items != null)
-                {
-                    currentWaveNumber++;
+                currentWaveNumber++;
 
-                    if(currentWaveNumber < waves.Length)
+                if(currentWaveNumber < waves.Length)
+                {
+                    canSpawn = true;
+                    gameState = GameState.SpawningWave;
+                }
+                else
+                {
+                    if (!spawnedPortals)
                     {
-                        canSpawn = true;
-                        gameState = GameState.SpawningWave;
-                    }
-                    else
-                    {
-                        if (!spawnedPortals)
-                        {
-                            SpawnPortals();
-                            spawnedPortals = true;
-                        }
+                        SpawnPortals();
+                        spawnedPortals = true;
                     }
                     
                 }
@@ -118,7 +136,7 @@ public class WaveSpawner : MonoBehaviour
             {
                 SpawnWave();
             }
-            else
+            else if (itemSpawner != null)
             {
                 gameState = GameState.ItemSelection;
             }
@@ -143,4 +161,13 @@ public class WaveSpawner : MonoBehaviour
         
     }
 
+    public void HasSpawned()
+    {
+        alreadySpawned = true;
+    }
+
+    public void HasSelectedItem()
+    {
+        selectedItem = true;
+    }
 }

@@ -255,7 +255,7 @@ MonoBehaviour:
     - {fileID: 834886460511225648, guid: b4bf384cb27d4384e8e64d4a0dfef900, type: 3}
     spawnInterval: 0
     isBossWave: 0
-  items: {fileID: 532204290}
+  itemSpawner: {fileID: 532204292}
   spawnPoints:
   - {fileID: 257472607}
   - {fileID: 1144772751}
@@ -267,7 +267,7 @@ MonoBehaviour:
   portalSpawnPoints:
   - {fileID: 576785435}
   - {fileID: 1350185942}
-  itemManager: {fileID: 0}
+  selectedItem: 0
   loopPortal: {fileID: 14729884412895594, guid: b267c87d81c821c4da545540d13ef64f, type: 3}
   endPortal: {fileID: 8442061150762677583, guid: 1c95707f1f06c4b47a54f6f7e5eef037, type: 3}
   waveCounterText: {fileID: 1836135262}
@@ -4904,7 +4904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 74.98877, y: -24.999939}
+  m_AnchoredPosition: {x: 74.98877, y: -25}
   m_SizeDelta: {x: 362.146, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &514990909
@@ -5104,7 +5104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 532204291}
-  - component: {fileID: 532204290}
+  - component: {fileID: 532204292}
   m_Layer: 0
   m_Name: ItemSpawner
   m_TagString: Untagged
@@ -5112,34 +5112,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &532204290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532204289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f329f08fd133a20479d818295ea2933f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  commonItems:
-  - {fileID: 2516492694828930918, guid: de29b5bacbf435e40ab1699723f64078, type: 3}
-  - {fileID: 8742052314245393702, guid: 43f5f2d3931ed384096048c6e5800a16, type: 3}
-  unCommonItems:
-  - {fileID: 8927334451618197132, guid: 8647aad9fdaf304419bab554f896966a, type: 3}
-  - {fileID: 8531974894773358831, guid: 320c6bdd994939b4c898bc5eec84bbe9, type: 3}
-  rareItems:
-  - {fileID: 5027623460300478529, guid: 064729852029a334ebb23d9901dfca44, type: 3}
-  - {fileID: 2639444587979062849, guid: a2dee4e14ff51c54fa02119944f33285, type: 3}
-  legendaryItems:
-  - {fileID: 4261849101900895796, guid: 2d7d2b133b673264aa0565b6afa63396, type: 3}
-  - {fileID: 1680722765260193525, guid: 009fb1a9812149042a4db6e12cc31b1a, type: 3}
-  commonSpawnRate: 0.5
-  unCommonSpawnRate: 0.3
-  rareSpawnRate: 0.19
-  legendarySpawnRate: 0.01
 --- !u!4 &532204291
 Transform:
   m_ObjectHideFlags: 0
@@ -5149,13 +5121,40 @@ Transform:
   m_GameObject: {fileID: 532204289}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.53, y: 3.07, z: -0.07467128}
+  m_LocalPosition: {x: -0.5, y: -3, z: -0.07467128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1291197352}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &532204292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532204289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f9c20f6238eca4fa6d3ad8e9ecf94e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSpawnPoints:
+  - {fileID: 1291197352}
+  commonItems:
+  - {fileID: 8531974894773358831, guid: 320c6bdd994939b4c898bc5eec84bbe9, type: 3}
+  - {fileID: 8742052314245393702, guid: 43f5f2d3931ed384096048c6e5800a16, type: 3}
+  - {fileID: 2639444587979062849, guid: a2dee4e14ff51c54fa02119944f33285, type: 3}
+  uncommonItems:
+  - {fileID: 2516492694828930918, guid: de29b5bacbf435e40ab1699723f64078, type: 3}
+  - {fileID: 167785050031319130, guid: 49adfda872a62ad4b954cf564096f6f0, type: 3}
+  rareItems:
+  - {fileID: 1680722765260193525, guid: 009fb1a9812149042a4db6e12cc31b1a, type: 3}
+  - {fileID: 8927334451618197132, guid: 8647aad9fdaf304419bab554f896966a, type: 3}
+  legendaryItems:
+  - {fileID: 4261849101900895796, guid: 2d7d2b133b673264aa0565b6afa63396, type: 3}
+  itemRarity: 320000001e0000001300000001000000
 --- !u!1 &576785434
 GameObject:
   m_ObjectHideFlags: 0
@@ -8741,7 +8740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 2059518346764444344, guid: 146f5fca0cb52a24d9145ea6004418f1, type: 3}
   arrowTransform: {fileID: 7905394139632486234}
-  timeBetweenShooting: 1.25
+  timeBetweenShooting: 0.25
   canShoot: 1
 --- !u!1 &3939290901492399006
 GameObject:
