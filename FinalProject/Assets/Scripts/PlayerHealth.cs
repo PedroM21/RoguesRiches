@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public Slider healthBarSlider;
     public Text healthBarValue;
+    public GameObject gameOverUI;
 
     public int maxHealth;
     public int currHealth;
@@ -16,6 +17,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currHealth = maxHealth;
+        gameOverUI.SetActive(false);
     }
 
     // Sets the health bar text to the max amount
@@ -37,7 +39,19 @@ public class PlayerHealth : MonoBehaviour
             healthBarValue.text = "0" + "/" + maxHealth.ToString();
             Destroy(gameObject);
             SceneManager.LoadScene("MainMenu");
+            //gameOverUI.SetActive(true);
         }
+    }
+
+    public void RetryGame()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void QuitToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
 }

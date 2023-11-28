@@ -6,7 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] AnimationStateChanger animationStateChanger;
     [SerializeField] Transform body;
+    [SerializeField] private UIInventory uiInventory;
+    private Inventory inventory;
     private Rigidbody2D rb;
+
 
     public float moveSpeed = 5.0f;
     public float dashSpeed;
@@ -29,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         state = State.Normal;
+
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
 
     }
 

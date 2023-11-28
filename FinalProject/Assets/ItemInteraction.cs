@@ -6,10 +6,12 @@ public class ItemInteraction : MonoBehaviour
 {
     private bool inRange = false;
     private WaveSpawner waveSpawner;
+    private ItemDescDisplay itemDisplay;
 
     private void Start()
     {
         waveSpawner = GameObject.FindObjectOfType<WaveSpawner>();
+        itemDisplay = GetComponentInChildren<ItemDescDisplay>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -17,6 +19,7 @@ public class ItemInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inRange = true;
+            itemDisplay.Show();
             Debug.Log("Player entered the interaction range.");
         }
     }
@@ -25,6 +28,7 @@ public class ItemInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inRange = false;
+            itemDisplay.Hide();
             Debug.Log("Player exited the interaction range.");
         }
     }
@@ -39,6 +43,7 @@ public class ItemInteraction : MonoBehaviour
                 waveSpawner.HasSelectedItem();
             }
             Destroy(gameObject);
+            itemDisplay.Hide();
         }
     }
 }
