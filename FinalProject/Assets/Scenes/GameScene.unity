@@ -407,7 +407,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7b4f23ec25d42494db54a8868203f5e8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.125
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -11457,6 +11457,7 @@ MonoBehaviour:
   arrowTransform: {fileID: 7905394139632486234}
   timeBetweenShooting: 0.25
   canShoot: 1
+  bowSound: {fileID: 8300000, guid: 2a52e85a7d7bf0e4882848235e165176, type: 3}
 --- !u!1 &3939290901492399006
 GameObject:
   m_ObjectHideFlags: 0
