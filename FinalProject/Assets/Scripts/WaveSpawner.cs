@@ -61,9 +61,6 @@ public class WaveSpawner : MonoBehaviour
             case GameState.ItemSelection:
                 if (itemSpawner != null)
                 {
-                    //Debug.Log("In Item Selection State");
-                    // Need to add ability for wave to wait until player selects an item
-                    // and then moves on to the next wave
                     if (alreadySpawned)
                     {
                         gameState = GameState.ItemSelection;

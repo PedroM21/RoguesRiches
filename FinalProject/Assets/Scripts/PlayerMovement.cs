@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         state = State.Normal;
 
         inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
+        //uiInventory.SetInventory(inventory);
 
     }
 

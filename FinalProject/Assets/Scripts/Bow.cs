@@ -10,6 +10,7 @@ public class Bow : MonoBehaviour
 
     public float timeBetweenShooting = 0.82f;
     public bool canShoot = true;
+    public AudioClip bowSound;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class Bow : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButton(0) && canShoot)
+        if (Input.GetMouseButton(0) && canShoot)
         {
             ShootArrow();
             Invoke("EnableShooting", timeBetweenShooting);
@@ -28,6 +29,7 @@ public class Bow : MonoBehaviour
     private void ShootArrow()
     {
         canShoot = false;
+        AudioSource.PlayClipAtPoint(bowSound, transform.position);
         Instantiate(arrow, arrowTransform.position, Quaternion.identity);
     }
 

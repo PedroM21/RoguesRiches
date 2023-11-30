@@ -8,22 +8,31 @@ public class AiMovement : MonoBehaviour
     public float moveSpeed = 4f;
     private Rigidbody2D rb;
     private Vector2 movement;
+    private SpriteRenderer spriteRenderer;
  
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("PlayerArcher").transform;
-        rb = this.GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3 direction = player.position - transform.position;
-        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //rb.rotation = angle - 90f;
         direction.Normalize();
         movement = direction;
+
+        if(movement.x > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if(movement.x < 0)
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 
     private void FixedUpdate()

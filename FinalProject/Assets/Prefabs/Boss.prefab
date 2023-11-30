@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7373946553638240492}
   - component: {fileID: 4067918945520977260}
   - component: {fileID: -7938758606787717914}
+  - component: {fileID: 5026265636044994062}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemies
@@ -212,6 +213,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5026265636044994062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834886460511225648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 472798d6b848cfb43ac844b2b7c6076f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitSound: {fileID: 8300000, guid: 6025ae035e3a80e44b9f84dbc23c7b80, type: 3}
 --- !u!1 &9218948665585748734
 GameObject:
   m_ObjectHideFlags: 0
